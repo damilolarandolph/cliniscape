@@ -1,6 +1,9 @@
 <?php
 
+
+
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +14,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+
+        $this->call(AccountTypeSeeder::class);
+        $this->command->info('Account seeder has run');
+        $this->call(UserSeeder::class);
+        $this->command->info('User seeder has run');
+    }
+}
+
+
+class AccountTypeSeeder extends Seeder
+{
+
+    public function run()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('account_types')->truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $accountType = new App\AccountType();
+        $accountType->type_description = 'admin';
+        $accountType->save();
+
+        $accountType = new App\AccountType();
+        $accountType->type_description = 'staff';
+        $accountType->save();
+
+        $accountType = new App\AccountType();
+        $accountType->type_description = 'patient';
+        $accountType->save();
     }
 }
