@@ -15,8 +15,8 @@ class AddUserAccountType extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('account_type')
-                ->references('account_types')
-                ->on('id');
+                ->references('id')
+                ->on('account_types');
         });
     }
 
