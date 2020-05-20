@@ -1,5 +1,9 @@
 <?php
 
+use App\Appointment;
+use App\Doctor;
+use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +19,57 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->middleware('auth');
+
+Route::get('/login', "LoginController@login");
+
+Route::post('/login', "LoginController@store");
+
+Route::get('/register', 'RegisterationController@register');
+
+Route::post('/register', 'RegisterationController@store');
+
+Route::get('/managedoctors', function () {
+    $doctorTypes = App\DoctorType::all();
+    return view('admin.managedoctors', ['doctorTypes' => $doctorTypes]);
 });
+
+Route::post('/managedoctors', 'DoctorController@store');
+
+Route::get("/patientschedule", function (Request $request) {
+
+    $email = $request->session()->get('email');
+    $role = $request->session()->get('role');
+    $class = null;
+    $user = null;
+    $isDoctor = false;
+    if ($role == 3) {
+        $class = User::class;
+    } else {
+        $class = Doctor::class;
+        $isDoctor = true;
+    }
+
+    $user = $class::where('email', '=', $email)->first();
+
+    return view('patient.schedule', ['user' => $user, 'isDoctor' => $isDoctor]);
+});
+
+Route::get('/makeappointment', function () {
+    $physcians = App\DoctorTypeMap::whereHas('type', function ($q) {
+        $q->where('id', '=', 1);
+    })->get();
+
+    $available_doctors = [$physcians];
+    return view('patient.makeappointment', ['doctors' => $available_doctors]);
+});
+
+Route::post('/addschedule', "AppointmentController@addSchedule");
+
+Route::post('/addnote', "AppointmentController@addNote");
+
+Route::post('/finishappointment', "AppointmentController@finishAppointment");
+
+Route::post('/makeappointment', 'AppointmentController@store');
+
+Route::get('/pastappointments', 'AppointmentController@show');

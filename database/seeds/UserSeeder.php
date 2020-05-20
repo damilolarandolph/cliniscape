@@ -14,10 +14,13 @@ class UserSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        DB::table('account_types')->truncate();
+        DB::table('users')->truncate();
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $user = new App\User('dami', 'damilolarandolph@gmail.com', 'test123', 1);
+        $user = new App\User();
+        $user->__constructWithItems('dami', 'damilolarandolph@gmail.com', 'test123', 1);
+
+        $user->save();
     }
 }

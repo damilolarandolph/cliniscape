@@ -12,6 +12,6 @@ class AccountType extends Model
 
     public function users()
     {
-        return $this->hasMany("App/User", 'account_type');
+        return $this->hasMany(User::class, 'account_type');
     }
 }

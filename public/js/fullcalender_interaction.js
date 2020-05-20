@@ -1,0 +1,1 @@
+Found. Redirecting to /@fullcalendar/interaction@4.4.0/main.min.js

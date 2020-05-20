@@ -10,7 +10,8 @@ class User extends Model
     protected $table = 'users';
     public $timestamps = false;
 
-    function __construct($name, $email, $password, $accountType)
+    protected $guarded = [];
+    function __constructWithItems($name, $email, $password, $accountType)
     {
         $this->name = $name;
         $this->email = $email;
@@ -18,8 +19,14 @@ class User extends Model
         $this->account_type = $accountType;
     }
 
-    public function accountType()
+
+    function userDetails()
     {
-        return $this->belongsTo("App/AccountType", 'account_type');
+        return $this->hasOne(UserDetails::class, 'user_email', 'email');
+    }
+
+    function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'patient_email', 'email');
     }
 }

@@ -1,0 +1,22 @@
+.sidebar-link a {
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+
+}
+
+.sidebar-link {
+
+    transition: all 0.5s;
+}
+
+.sidebar-link:hover a {
+    transition: all 0.5s;
+    color: white;
+}
+
+.sidebar-link:hover {
+    transition: all 0.5s;
+    background-color: rgb(61, 105, 228);
+}
