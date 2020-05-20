@@ -1,10 +1,10 @@
 <div class="row p-2 bg-primary" style="height: 10%;">
-    <div class="row">
+    <div class="row align-content-center">
         <div class="col">
            <img class="img-fluid" style="max-width: 70%"  src="{{asset('images/logo.svg')}}">
         </div>
         <div class="col  "> 
-            <span style="font-size: 1.5rem;" class="font-weight-bold text-white align-middle"> Hospital Appoint</span>          
+            <span style="font-size: 1.5rem;" class="text-capitalize font-weight-bold text-white align-middle">CliniScape</span>          
         </div>
     </div>
 </div>
