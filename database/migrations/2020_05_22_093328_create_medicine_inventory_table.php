@@ -5,11 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-
-
-
-
-class AddAccountTypesTable extends Migration
+class CreateMedicineInventoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,9 +14,13 @@ class AddAccountTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_types', function (Blueprint $table) {
+        Schema::create('medicine_inventory', function (Blueprint $table) {
             $table->id();
-            $table->string('type_description', 20);
+            $table->string('name');
+            $table->string('dosage');
+            $table->bigInteger('quantity');
+            $table->timestamps();
+            $table->bigInteger('unit_price');
         });
     }
 
@@ -33,7 +33,7 @@ class AddAccountTypesTable extends Migration
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         // drop table
-        Schema::dropIfExists('account_types');
+        Schema::dropIfExists('medicine_inventory');
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

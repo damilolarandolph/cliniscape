@@ -11,7 +11,8 @@ class Doctor extends User
     protected static function booted()
     {
         static::addGlobalScope('account_type', function (Builder $builder) {
-            $builder->where('account_type', '=', 2);
+            $builder->where('account_type', '=', 2)
+                ->orWhere('account_type', '=', 1);
         });
     }
 

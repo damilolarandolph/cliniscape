@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Doctor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Support\Facades\Validator;
 
 use function Utilities\emailExists;
 use function Utilities\isCorrectPassword;
@@ -12,20 +12,12 @@ use function Utilities\isCorrectPassword;
 define('__ROOT__', dirname(dirname(__FILE__)));
 require_once(__ROOT__ . "../../../utilities/database_helpers.php");
 
-class LoginController extends Controller
+class DoctorLogin extends Controller
 {
 
-    public function login()
+    public function login(Request $request)
     {
-        return view('login');
-    }
-
-    public function store(Request $request)
-    {
-
-
-
-        $validator = FacadesValidator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'email' => [
                 //ensures email is a string
                 'string',
@@ -67,7 +59,7 @@ class LoginController extends Controller
         }
 
 
-        $user = User::where('email', '=', $email)->first();
+        $user = Doctor::where('email', '=', $email)->first();
 
         $account_type = $user->account_type;
 

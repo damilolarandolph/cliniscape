@@ -9,9 +9,7 @@
         </div>
     </div>
 </div>
-<div class="row sidebar-link {{Request::path() == 'managedoctors' ? 'bg-primary text-light' : ''}}">
-    <a class="{{Request::path() == 'managedoctors' ? 'text-light' : ''}}" href="/managedoctors">Manage Doctors</a>
-</div>
+
 
 <div class="row sidebar-link {{Request::path() == 'patientschedule' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'patientschedule' ? 'text-light' : ''}}" href="/patientschedule">View Calendar</a>
@@ -29,11 +27,18 @@
     </a>
 </div>
 
+@if(request()->session()->get('role') != 3)
+<div class="row sidebar-link {{Request::path() == 'managedoctors' ? 'bg-primary text-light' : ''}}">
+    <a class="{{Request::path() == 'managedoctors' ? 'text-light' : ''}}" href="/managedoctors">Manage Doctors</a>
+</div>
+
 <div class="row sidebar-link {{Request::path() == 'addlabresult' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'addlabresult' ? 'text-light' : ''}}" href="/addlabresult">
         Add Lab Result
     </a>
 </div>
+
+@endif
 
 <div class="row sidebar-link {{Request::path() == 'viewresults' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'viewresults' ? 'text-light' : ''}}" href="/viewresults">

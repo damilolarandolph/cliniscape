@@ -25,6 +25,10 @@ Route::get('/login', "LoginController@login");
 
 Route::post('/login', "LoginController@store");
 
+Route::get('/doctorlogin', "LoginController@login");
+
+Route::post('/doctorlogin', "DoctorLogin@login");
+
 Route::get('/register', 'RegisterationController@register');
 
 Route::post('/register', 'RegisterationController@store');
@@ -60,7 +64,10 @@ Route::get('/makeappointment', function () {
         $q->where('id', '=', 1);
     })->get();
 
-    $available_doctors = [$physcians];
+    $available_doctors = [];
+
+    if (count($physcians) != 0)
+        array_push($available_doctors, $physcians);
     return view('patient.makeappointment', ['doctors' => $available_doctors]);
 });
 

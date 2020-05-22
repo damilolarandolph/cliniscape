@@ -1,5 +1,6 @@
 <?php
 
+use App\DoctorType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,9 +19,10 @@ class DoctorTypesSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $doctorType = App\DoctorType::createMany(
+        $doctorType = App\DoctorType::create(
             [
                 'title' => 'Primary Care Doctor',
+                'description' => '',
                 'services_rendered' => [
                     [
                         'description' => 'Consultation',
@@ -31,68 +33,73 @@ class DoctorTypesSeeder extends Seeder
                         'fee' => 20
                     ],
                 ]
-            ],
-            [
-                'title' => 'Lab Director/Technician',
-                'services_rendered' => [
-                    [
-                        'description' => 'Toxicology Report',
-                        'fee' => 1000
-                    ],
-                    [
-                        'description' => 'Chemistry Report',
-                        'fee' => 1000
-                    ],
-                    [
-                        'description' => 'Microbiology Report',
-                        'fee' => 1000
-                    ],
-                    [
-                        'description' => 'Immnue Report',
-                        'fee' => 1000
-                    ]
-                ]
-            ],
-            [
-                'title' => 'Infectious Diseases Doctor',
-                'services_rendered' => [
-                    [
-                        'description' => 'HIV Consultation',
-                        'fee' => 200
-                    ],
-                    [
-                        'description' => 'Tuberculosis Consultation',
-                        'fee' => 300
-                    ],
-                ]
-            ],
-
-            [
-                'title' => 'Cardiologist',
-                'services_rendered' => [
-                    [
-                        'description' => 'Echocardiogram',
-                        'fee' => 1500
-                    ],
-                    [
-                        'description' => 'Consultation',
-                        'fee' => 500
-                    ],
-                    [
-                        'description' => 'Chest X-Ray',
-                        'fee' => 1500
-                    ],
-                    [
-                        'description' => 'Cardiac Catheterization and Angiogram',
-                        'fee' => 3000
-                    ]
-                ]
-            ],
-
-            [
-                'title' => 'Pharmacist'
-            ],
-
+            ]
         );
+
+        DoctorType::create([
+            'title' => 'Lab Director/Technician',
+            'description' => '',
+            'services_rendered' => [
+                [
+                    'description' => 'Toxicology Report',
+                    'fee' => 1000
+                ],
+                [
+                    'description' => 'Chemistry Report',
+                    'fee' => 1000
+                ],
+                [
+                    'description' => 'Microbiology Report',
+                    'fee' => 1000
+                ],
+                [
+                    'description' => 'Immnue Report',
+                    'fee' => 1000
+                ]
+            ]
+        ]);
+        DoctorType::create([
+            'title' => 'Infectious Diseases Doctor',
+            'description' => '',
+            'services_rendered' => [
+                [
+                    'description' => 'HIV Consultation',
+                    'fee' => 200
+                ],
+                [
+                    'description' => 'Tuberculosis Consultation',
+                    'fee' => 300
+                ],
+            ]
+        ]);
+
+        DoctorType::create([
+            'title' => 'Cardiologist',
+            'description' => '',
+            'services_rendered' => [
+                [
+                    'description' => 'Echocardiogram',
+                    'fee' => 1500
+                ],
+                [
+                    'description' => 'Consultation',
+                    'fee' => 500
+                ],
+                [
+                    'description' => 'Chest X-Ray',
+                    'fee' => 1500
+                ],
+                [
+                    'description' => 'Cardiac Catheterization and Angiogram',
+                    'fee' => 3000
+                ]
+            ]
+        ]);
+
+        DoctorType::create([
+            'description' => '',
+            'title' => 'Pharmacist',
+            'services_rendered' => []
+        ]);
     }
 }

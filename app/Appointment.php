@@ -28,4 +28,14 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'patient_email', 'email');
     }
+
+    public function prescriptions()
+    {
+        return $this->hasMany(Prescription::class, 'for_appointment', 'id');
+    }
+
+    public function invoiceItems()
+    {
+        return $this->hasMany(InvoiceItem::class, 'for_appointment', 'id');
+    }
 }

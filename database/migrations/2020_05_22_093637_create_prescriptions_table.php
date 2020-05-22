@@ -5,11 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-
-
-
-
-class AddAccountTypesTable extends Migration
+class CreatePrescriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,9 +14,17 @@ class AddAccountTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_types', function (Blueprint $table) {
+        Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('type_description', 20);
+            $table->foreignId('for_appointment')
+                ->references('id')
+                ->on('appointments');
+            $table->string('medicine_name');
+            $table->string('dosage');
+            $table->string('quantity');
+            $table->string('instructions');
+            $table->timestamps();
+            $table->boolean('collected')->default(false);
         });
     }
 
@@ -33,7 +37,7 @@ class AddAccountTypesTable extends Migration
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         // drop table
-        Schema::dropIfExists('account_types');
+        Schema::dropIfExists('prescriptions');
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

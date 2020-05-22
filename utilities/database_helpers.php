@@ -2,6 +2,7 @@
 
 namespace Utilities;
 
+use App\Doctor;
 use App\User;
 
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +12,8 @@ use Illuminate\Support\Facades\Hash;
  */
 function emailExists($email)
 {
-    return User::where("email", "=", $email)->exists();
+    return User::where("email", "=", $email)->exists()
+        || Doctor::where("email", "=", $email)->exists();
 }
 
 /**
@@ -20,6 +22,10 @@ function emailExists($email)
 function isCorrectPassword($email, $password)
 {
     $user = User::where("email", "=", $email)->first();
-
-    return Hash::check($password, $user->password);
+    if ($user == null) {
+        $doctor = Doctor::where("email", '=', $email)->first();
+        return Hash::check($password, $doctor->password);
+    }
+    $userCheck = Hash::check($password, $user->password);
+    return $userCheck;
 }

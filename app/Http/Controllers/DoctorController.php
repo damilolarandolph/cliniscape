@@ -71,7 +71,7 @@ class DoctorController extends Controller
 
         $userDetails = [
             'basic_details' => [
-                'avatar' => 'images/default.jpg',
+                'avatar' => 'avatar/default.jpg',
                 'firstname' => $request->input('firstname'),
                 'lastname' => $request->input('lastname'),
                 'dob' => $request->input('dob'),
