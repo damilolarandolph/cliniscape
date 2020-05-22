@@ -29,4 +29,9 @@ class User extends Model
     {
         return $this->hasMany(Appointment::class, 'patient_email', 'email');
     }
+
+    function labResults()
+    {
+        return $this->hasMany(LabResult::class, 'patient_email', 'email');
+    }
 }

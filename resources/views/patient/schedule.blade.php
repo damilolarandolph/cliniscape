@@ -24,9 +24,9 @@ Schedule Appointment
 
 
 
-    <div class="col-md-9">
-        <div id="calendar"></div>
-    </div>
+<div class="col-md-9">
+    <div id="calendar"></div>
+</div>
 
 
 @endsection

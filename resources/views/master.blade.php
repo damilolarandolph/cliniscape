@@ -17,7 +17,7 @@
                 @include('partials.sidebar')
             </div>
             <div class="col">
-                    @include('partials.titlebar')             
+                @include('partials.titlebar')
                 <div class="row justify-content-center p-4" style="max-height: 100%">
                     @yield('main-content')
                 </div>
@@ -27,6 +27,7 @@
 </body>
 <script src="{{ asset('js/app.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/custom-file-input.js')}}"></script>
 @yield('js')
 
 </html>

@@ -34,17 +34,19 @@
                     </select>
                 </div>
                 <h5 class="card-title">Choose a Doctor</h5>
-                @foreach($doctorsOfType as $doctorTypeMap)
+               
                 <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center mb-1">
+                    @foreach($doctorsOfType as $doctorTypeMap)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
                         {{$doctorTypeMap->doctor->userDetails->basic_details['firstname']}}
                         {{$doctorTypeMap->doctor->userDetails->basic_details['lastname']}}
                       <span class="align-middle">
                           <input  type="radio" name="doctoremail" id="exampleRadios1" value="{{$doctorTypeMap->doctor->email}}">
                         </span>
                     </li>
+                    @endforeach
                   </ul>
-                @endforeach
+                
             </div>
         </div>
         @endforeach

@@ -11,6 +11,7 @@
 
 
 <div id="accordion" class="w-100">
+    @isset($user->appointments)
     @foreach($user->appointments as $appointment)
     @php
     if ($isDoctor){
@@ -21,11 +22,12 @@
 
 
     @endphp
-    <div class="card w-100">
+    <div class="card w-100 mb-2">
 
         <div class="card-header" id="heading{{$loop->iteration}}">
             <h5 class="mb-0">
-                <button class="btn btn-link w-100" data-toggle="collapse" data-target="#collapse{{$loop->iteration}}" aria-expanded="true" aria-controls="collapse{{$loop->iteration}}">
+                <button class="btn btn-link w-100" data-toggle="collapse" data-target="#collapse{{$loop->iteration}}"
+                    aria-expanded="true" aria-controls="collapse{{$loop->iteration}}">
                     <div class="row">
                         <div class="col">
                             <span>
@@ -37,7 +39,8 @@
                         </div>
                         <div class="col">
 
-                            <span class="badge badge-primary {{($appointment->status == 3) ? 'badge-info' : ''}} {{($appointment->status == 1) ? 'badge-success' : ''}}">
+                            <span
+                                class="badge badge-primary {{($appointment->status == 3) ? 'badge-info' : ''}} {{($appointment->status == 1) ? 'badge-success' : ''}}">
                                 @if($appointment->status == 1)
                                 Completed
                                 @elseif($appointment->status == 3)
@@ -54,45 +57,61 @@
         </div>
 
 
-        <div id="collapse{{$loop->iteration}}" class="collapse show" aria-labelledby="heading{{$loop->iteration}}" data-parent="#accordion">
+        <div id="collapse{{$loop->iteration}}" class="collapse show" aria-labelledby="heading{{$loop->iteration}}"
+            data-parent="#accordion">
             <div class="card-body">
                 <div class="row">
                     <div class="col">
                         <div class="list-group" id="list-tab" role="tablist">
-                            <a class="list-group-item list-group-item-action active " id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">{{$isDoctor ? 'Patient Info' : 'Doctor Info'}}</a>
-                            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Service Rendered</a>
-                            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Time</a>
-                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-setting" role="tab" aria-controls="settings">Notes</a>
-                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#schedule" role="tab" aria-controls="settings">Schedule Appointment</a>
-                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#finish" role="tab" aria-controls="settings">Finish</a>
+                            <a class="list-group-item list-group-item-action active " id="list-home-list"
+                                data-toggle="list" href="#list-home{{$loop->iteration}}" role="tab"
+                                aria-controls="home">{{$isDoctor ? 'Patient Info' : 'Doctor Info'}}</a>
+                            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                                href="#list-profile{{$loop->iteration}}" role="tab" aria-controls="profile">Service
+                                Rendered</a>
+                            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                                href="#list-messages{{$loop->iteration}}" role="tab" aria-controls="messages">Time</a>
+                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                                href="#list-setting{{$loop->iteration}}" role="tab" aria-controls="settings">Notes</a>
+                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                                href="#schedule{{$loop->iteration}}" role="tab" aria-controls="settings">Schedule
+                                Appointment</a>
+                            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                                href="#finish{{$loop->iteration}}" role="tab" aria-controls="settings">Finish</a>
 
                         </div>
                     </div>
                     <div class="col">
                         <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                            <div class="tab-pane fade show active" id="list-home{{$loop->iteration}}" role="tabpanel"
+                                aria-labelledby="list-home-list">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             {{$related->userDetails->basic_details['firstname']}}
                                             {{$related->userDetails->basic_details['lastname']}}
                                         </h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
+                                        <p class="card-text">With supporting text below as a natural lead-in to
+                                            additional content.</p>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                            <div class="tab-pane fade" id="list-profile{{$loop->iteration}}" role="tabpanel"
+                                aria-labelledby="list-profile-list">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Service Rendered: {{$appointment->appointment_details['appointmentfor']}}</h5>
+                                        <h5 class="card-title">Service Rendered:
+                                            {{$appointment->appointment_details['appointmentfor']}}</h5>
                                         <p class="card-text">Cost: 100$</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
+                            <div class="tab-pane fade" id="list-messages{{$loop->iteration}}" role="tabpanel"
+                                aria-labelledby="list-messages-list">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Appointment Date</h5>
@@ -104,7 +123,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="list-setting" role="tabpanel" aria-labelledby="list-settings-list">
+                            <div class="tab-pane fade" id="list-setting{{$loop->iteration}}" role="tabpanel"
+                                aria-labelledby="list-settings-list">
                                 <div class="card mb-3">
                                     <div class="card-body">
                                         <h5 class="card-title">Notes</h5>
@@ -128,7 +148,8 @@
                                             <div class="form-group">
                                                 <input type="hidden" name="appointment" value="{{$appointment->id}}">
                                                 <label for="exampleFormControlTextarea1">Type Note Here</label>
-                                                <textarea name="note" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                <textarea name="note" class="form-control"
+                                                    id="exampleFormControlTextarea1" rows="3"></textarea>
                                             </div>
                                             <button class="btn btn-primary">Add Note</button>
                                         </form>
@@ -136,7 +157,8 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="list-settings-list">
+                            <div class="tab-pane fade" id="schedule{{$loop->iteration}}" role="tabpanel"
+                                aria-labelledby="list-settings-list">
                                 <div class="card mb-3">
                                     <div class="card-body">
 
@@ -146,24 +168,37 @@
                                             @csrf
                                             <div class="form-group">
                                                 <div class="input-group mb-3">
-                                                    <input type="hidden" name="appointment" value="{{$appointment->id}}">
-                                                    <input id="date" type="text" class="form-control" placeholder="Choose Date" name="date" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                    <input type="hidden" name="appointment"
+                                                        value="{{$appointment->id}}">
+                                                    <input id="date" type="text" class="form-control"
+                                                        placeholder="Choose Date" name="date"
+                                                        aria-label="Recipient's username"
+                                                        aria-describedby="basic-addon2">
 
                                                 </div>
 
                                                 <div class="input-group mb-3">
-                                                    <input type="hidden" name="appointment" value="{{$appointment->id}}">
-                                                    <input id="start-time" type="text" class="form-control" placeholder="Choose start time" name="start-time" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                    <input type="hidden" name="appointment"
+                                                        value="{{$appointment->id}}">
+                                                    <input id="start-time" type="text" class="form-control"
+                                                        placeholder="Choose start time" name="start-time"
+                                                        aria-label="Recipient's username"
+                                                        aria-describedby="basic-addon2">
 
                                                 </div>
 
                                                 <div class="input-group mb-3">
-                                                    <input type="hidden" name="appointment" value="{{$appointment->id}}">
-                                                    <input id="end-time" type="text" class="form-control" placeholder="Choose end time" name="end-time" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                    <input type="hidden" name="appointment"
+                                                        value="{{$appointment->id}}">
+                                                    <input id="end-time" type="text" class="form-control"
+                                                        placeholder="Choose end time" name="end-time"
+                                                        aria-label="Recipient's username"
+                                                        aria-describedby="basic-addon2">
 
                                                 </div>
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-outline-secondary" type="submit">Schedule</button>
+                                                    <button class="btn btn-outline-secondary"
+                                                        type="submit">Schedule</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -171,7 +206,8 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="finish" role="tabpanel" aria-labelledby="list-settings-list">
+                            <div class="tab-pane fade" id="finish{{$loop->iteration}}" role="tabpanel"
+                                aria-labelledby="list-settings-list">
                                 <div class="card mb-3">
                                     <div class="card-body">
 
@@ -194,6 +230,10 @@
         </div>
     </div>
     @endforeach
+    @endisset
+    @if (!isset($user->appointments))
+    <p>You have No Appointments</p>
+    @endif
 </div>
 @endsection
 

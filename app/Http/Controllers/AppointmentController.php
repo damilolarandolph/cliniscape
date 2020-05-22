@@ -51,7 +51,7 @@ class AppointmentController extends Controller
             ]
         ]);
 
-        return redirect()->back(200);
+        return redirect()->back();
     }
 
     public function addSchedule(Request $request)

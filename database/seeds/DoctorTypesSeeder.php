@@ -18,13 +18,81 @@ class DoctorTypesSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $doctorType = App\DoctorType::create([
-            'title' => 'Physician',
-            'description' => 'A simple physician',
-            'services_rendered' => [
-                'Consulation',
-                'Treatment'
-            ]
-        ]);
+        $doctorType = App\DoctorType::createMany(
+            [
+                'title' => 'Primary Care Doctor',
+                'services_rendered' => [
+                    [
+                        'description' => 'Consultation',
+                        'fee' => 100
+                    ],
+                    [
+                        'description' => 'Vaccine Administration',
+                        'fee' => 20
+                    ],
+                ]
+            ],
+            [
+                'title' => 'Lab Director/Technician',
+                'services_rendered' => [
+                    [
+                        'description' => 'Toxicology Report',
+                        'fee' => 1000
+                    ],
+                    [
+                        'description' => 'Chemistry Report',
+                        'fee' => 1000
+                    ],
+                    [
+                        'description' => 'Microbiology Report',
+                        'fee' => 1000
+                    ],
+                    [
+                        'description' => 'Immnue Report',
+                        'fee' => 1000
+                    ]
+                ]
+            ],
+            [
+                'title' => 'Infectious Diseases Doctor',
+                'services_rendered' => [
+                    [
+                        'description' => 'HIV Consultation',
+                        'fee' => 200
+                    ],
+                    [
+                        'description' => 'Tuberculosis Consultation',
+                        'fee' => 300
+                    ],
+                ]
+            ],
+
+            [
+                'title' => 'Cardiologist',
+                'services_rendered' => [
+                    [
+                        'description' => 'Echocardiogram',
+                        'fee' => 1500
+                    ],
+                    [
+                        'description' => 'Consultation',
+                        'fee' => 500
+                    ],
+                    [
+                        'description' => 'Chest X-Ray',
+                        'fee' => 1500
+                    ],
+                    [
+                        'description' => 'Cardiac Catheterization and Angiogram',
+                        'fee' => 3000
+                    ]
+                ]
+            ],
+
+            [
+                'title' => 'Pharmacist'
+            ],
+
+        );
     }
 }

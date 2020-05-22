@@ -73,3 +73,12 @@ Route::post('/finishappointment', "AppointmentController@finishAppointment");
 Route::post('/makeappointment', 'AppointmentController@store');
 
 Route::get('/pastappointments', 'AppointmentController@show');
+
+Route::get('/addlabresult', function () {
+    $patients = App\User::where('account_type', '=', 3)->get();
+    return view('addlabresult', ['patients' => $patients]);
+});
+
+Route::post('/addlabresult', "LabResultController@store");
+
+Route::get('/viewresults', "LabResultController@show");

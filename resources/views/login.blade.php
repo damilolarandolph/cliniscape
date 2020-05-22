@@ -14,11 +14,13 @@
         <form method="POST" class="form-box">
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input required type="email" class="form-control" id="email" value="{{old('email')}}" name="email" aria-describedby="emailHelp">
+                <input required type="email" class="form-control" id="email" value="{{old('email')}}" name="email"
+                    aria-describedby="emailHelp">
                 @error('email')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                    else.</small>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
