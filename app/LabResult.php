@@ -22,11 +22,11 @@ class LabResult extends Model
 
     public function doctor()
     {
-        return $this->hasOne(Doctor::class, 'doctor_email', 'email');
+        return $this->belongsTo(Doctor::class, 'doctor_email', 'email');
     }
 
     public function patient()
     {
-        return $this->hasOne(User::class, 'patient_email', 'email');
+        return $this->belongsTo(User::class, 'patient_email', 'email');
     }
 }

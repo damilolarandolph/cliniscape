@@ -81,7 +81,8 @@ return [
     'links' => [
         // public_path('storage') => storage_path('app/public'),
         public_path('labresults') => storage_path('app/labresults'),
-        public_path('avatars') => storage_path('app/labresults')
+        public_path('avatars') => storage_path('app/labresults'),
+        public_path('sheets') => storage_path('app/sheets')
     ],
 
 ];

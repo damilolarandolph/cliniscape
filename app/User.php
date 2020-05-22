@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,6 +18,13 @@ class User extends Model
         $this->email = $email;
         $this->password = Hash::make($password);
         $this->account_type = $accountType;
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope('account_type', function (Builder $builder) {
+            $builder->where('account_type', '=', 3);
+        });
     }
 
 

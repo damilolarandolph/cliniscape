@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Doctor;
+use App\LabResult;
+use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class LabResultController extends Controller
 {
@@ -32,9 +36,11 @@ class LabResultController extends Controller
                 array_push($images, $file->store('labresults'));
             }
         }
+        $sheetname = Str::random(10);
+        Storage::put("sheets/{$sheetname}.json", $request->input('resultsheet'));
         $labresultDetails = [
             "date" => $currentCreated,
-            "sheet" => $request->input('resultsheet'),
+            "sheet" => "sheets/{$sheetname}.json",
             "images" => $images,
             "description" => $request->input('resultdescription'),
             "images" => $images,
@@ -52,8 +58,63 @@ class LabResultController extends Controller
     public function show(Request $request)
     {
 
+        $email = $request->session()->get('email');
+        $isDoctor = $request->session()->get('role') == 2;
+
+        $user = null;
+
+        if ($isDoctor)
+            $class = Doctor::class;
+        else
+            $class = User::class;
+
+        $user = $class::where('email', $email)->first();
+        $results = null;
+
+        if ($request->filled('by') && $request->filled('for')) {
+
+            $results = LabResult::where('doctor_email', $request->input('by'))
+                ->where('patient_email', $request->input('for'));
+        } else if ($request->filled('by')) {
+
+            $results = LabResult::where('doctor_email', '=', $request->input('by'));
+        } else if ($request->filled('for')) {
+
+            $results = LabResult::where('patient_email', '=', $request->input('for'));
+        } else {
+            if ($isDoctor)
+                return redirect("/viewresults?by={$email}");
+            else
+                return redirect("/viewresults?for={$email}");
+        }
+
+        if ($request->filled('searchterm')) {
+
+            $searchTerm = "%" . str_replace(' ', '', $request->input('searchterm')) . "%";
+            $results =  $results->whereRaw("lower(replace(lab_result_details->'$.title',' ', '')) like (?)", [$searchTerm]);
+        }
+
+        $results = $results->get();
 
 
-        return view('viewlabresults');
+        $patients = [];
+        $doctors = [];
+
+        if ($isDoctor) {
+            $patients = User::all()->pluck('email')->all();
+        } else {
+            $doctors = $user->labResults->all()->pluck('email')->all();
+        }
+
+        session()->flashInput($request->input());
+
+        return view('viewlabresults', [
+            'isDoctor' => $isDoctor,
+            'results' => $results,
+            'user' => $user,
+            'patients' => $patients,
+            'doctors' => $doctors
+
+        ]);
     }
 }
