@@ -71,6 +71,14 @@ Route::get('/makeappointment', function () {
     return view('patient.makeappointment', ['doctors' => $available_doctors]);
 });
 
+Route::get('/medicalsupplies', 'InventoryController@medicalSupplies');
+
+Route::post('/addprescription', 'AppointmentController@addPrescription');
+
+Route::post('/addsupplies', 'AppointmentController@addSupplies');
+
+Route::post('/addservice', 'AppointmentController@addService');
+
 Route::post('/addschedule', "AppointmentController@addSchedule");
 
 Route::post('/addnote', "AppointmentController@addNote");
@@ -81,6 +89,10 @@ Route::post('/makeappointment', 'AppointmentController@store');
 
 Route::get('/pastappointments', 'AppointmentController@show');
 
+Route::get('/perscriptions', 'PerscriptionController@show');
+
+Route::post('/dispenseprescriptions', 'PerscriptionController@dispense');
+
 Route::get('/addlabresult', function () {
     $patients = App\User::where('account_type', '=', 3)->get();
     return view('addlabresult', ['patients' => $patients]);
@@ -89,3 +101,6 @@ Route::get('/addlabresult', function () {
 Route::post('/addlabresult', "LabResultController@store");
 
 Route::get('/viewresults', "LabResultController@show");
+
+
+Route::get('/manageinventory', "InventoryController@show");

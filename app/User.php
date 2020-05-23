@@ -33,6 +33,15 @@ class User extends Model
         return $this->hasOne(UserDetails::class, 'user_email', 'email');
     }
 
+    function fullName()
+    {
+        $firstname = $this->userDetails->basic_details['firstname'];
+        $lastname = $this->userDetails->basic_details['lastname'];
+        $name = "{$firstname} {$lastname}";
+
+        return $name;
+    }
+
     function appointments()
     {
         return $this->hasMany(Appointment::class, 'patient_email', 'email');

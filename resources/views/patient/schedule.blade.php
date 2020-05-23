@@ -39,7 +39,8 @@ Schedule Appointment
 <script src="https://unpkg.com/@fullcalendar/bootstrap@4.4.0/main.min.js"></script>
 <script>
     var calendarEl = document.getElementById('calendar');
-    let events = [];
+    let events = [
+
     @foreach($user->appointments as $appointment)
    
     @php
@@ -49,12 +50,13 @@ Schedule Appointment
     $related = $appointment->doctor;
     }
     @endphp
-        events.push({
-            title: '{{$appointment->appointment_details["appointmentfor"]}} with {{$related->userDetails->basic_details["firstname"]}} {{$related->userDetails->basic_details["lastname"]}}',
-            start: '{{$appointment->appointment_details["time"]}}T{{$appointment->appointment_details["start-time"]}}:00Z',
-            end: '{{$appointment->appointment_details["time"]}}T{{$appointment->appointment_details["end-time"]}}:00Z',
-        })
+      {
+            title: 'Appointment with {{$related->fullName()}}',
+            start: '{{$appointment->appointment_details["time"] ?? 0}}T{{$appointment->appointment_details["start-time"] ?? 0}}:00Z',
+            end: '{{$appointment->appointment_details["time"] ?? 0}}T{{$appointment->appointment_details["end-time"] ?? 0}}:00Z',
+        }@if(!$loop->last),@endif
     @endforeach
+    ];
     var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ['interaction', 'dayGrid', 'timeGrid', 'bootstrap'],
         defaultView: 'timeGridWeek',

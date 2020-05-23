@@ -45,3 +45,16 @@
         View Results
     </a>
 </div>
+
+<div class="row sidebar-link {{Request::path() == 'perscriptions' ? 'bg-primary text-light' : ''}}">
+    <a class="{{Request::path() == 'viewresults' ? 'perscriptions' : ''}}" href="/perscriptions">
+        View Perscriptions
+    </a>
+</div>
+
+
+<div class="row sidebar-link {{Request::path() == 'manageinventory' ? 'bg-primary text-light' : ''}}">
+    <a class="{{Request::path() == 'manageinventory' ? 'text-light' : ''}}" href="/manageinventory">
+        Manage Inventory
+    </a>
+</div>

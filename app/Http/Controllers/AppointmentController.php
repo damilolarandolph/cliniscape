@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Appointment;
 use App\Doctor;
+use App\InvoiceItem;
+use App\MedicalSupply;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -39,16 +41,10 @@ class AppointmentController extends Controller
     {
         $doctor = Doctor::where('email', '=', $request->input('doctoremail'))->first();
 
-        $service = $doctor
-            ->typeMap
-            ->type
-            ->services_rendered[(int) $request->input('service')];
         $doctor->appointments()->create([
             'patient_email' => $request->session()->get('email'),
             'status' => 2,
-            'appointment_details' => [
-                'appointmentfor' => $service
-            ]
+            'appointment_details' => []
         ]);
 
         return redirect()->back();
@@ -82,10 +78,104 @@ class AppointmentController extends Controller
         return redirect()->back();
     }
 
+    public function addPrescription(Request $request)
+    {
+        $prescriptions = json_decode($request->input('prescriptions'));
+        $appointment = $request->input('appointment');
+        $appointment = Appointment::find($appointment);
+
+        foreach ($prescriptions as $prescription) {
+            $appointment->prescriptions()->create([
+                'medicine_name' => $prescription->drug_name,
+                'dosage' => $prescription->strength,
+                'quantity' => $prescription->quantity,
+                'instructions' => $prescription->instructions
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function addSupplies(Request $request)
+    {
+        $supplies = json_decode($request->input('supplies'));
+        $appointment = $request->input('appointment');
+        $appointment = Appointment::find($appointment);
+        $appointmentDetails = $appointment->appointment_details;
+        if (!isset($appointmentDetails->supplies))
+            $appointmentDetails->supplies = [];
+
+        foreach ($supplies as $supply) {
+            $supplyDetails = [
+                'id' => $supply->id,
+                'quantity' => $supply->quantity
+            ];
+
+            array_push($appointmentDetails->supplies, $supplyDetails);
+        }
+
+        $appointment->appointment_details = $appointmentDetails;
+        $appointment->save();
+    }
+
+    public function addService(Request $request)
+    {
+        $service = $request->input('service');
+        $appointment = $request->input(('appointment'));
+        $appointment = Appointment::find($appointment);
+        $appointmentDetails = $appointment->appointment_details;
+        if (!isset($appointmentDetails['services']))
+            $appointmentDetails['services'] = [];
+
+        array_push($appointmentDetails['services'], $service);
+
+        $appointment->appointment_details = $appointmentDetails;
+        $appointment->save();
+        return redirect()->back();
+    }
+
     public function finishAppointment(Request $request)
     {
         $appointment = Appointment::find($request->input('appointment'));
         $appointment->status = 1;
+        if (isset($appointment->appointment_details['services'])) {
+            foreach ($appointment->appointment_details['services'] as $service) {
+                $serviceItem = $appointment
+                    ->doctord
+                    ->typeMap
+                    ->type
+                    ->services_rendered[(int) $service];
+                $appointment->invoiceItems()->create(
+                    [
+                        'description' => $serviceItem['description'],
+                        'unit_price' => $serviceItem['fee'],
+                        'quantity' => 0,
+                        'total_price' => $serviceItem['fee'],
+                        'paid' => false
+                    ]
+                );
+            }
+        }
+
+        if (isset($appointment->appointment_details['supplies'])) {
+            foreach ($appointment->appointment_details['supplies'] as $supply) {
+                $supplyItem = MedicalSupply::find($supply['id']);
+
+                $appointment->invoiceItems()->create(
+                    [
+                        'description' => $supplyItem['name'],
+                        'unit_price' => $supplyItem['unit_price'],
+                        'quantity' => $supply['quantity'],
+                        'total_price' => ((int) $supply['quantity']) * $supplyItem['unit_price'],
+                        'paid' => false
+                    ]
+                );
+
+                $supplyItem->quantity = $supplyItem->quantity - $supply['quantity'];
+                $supplyItem->save();
+            }
+        }
+
         $appointment->save();
         return redirect()->back();
     }

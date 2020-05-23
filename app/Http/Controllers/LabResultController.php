@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Doctor;
 use App\LabResult;
 use App\User;
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -100,10 +101,15 @@ class LabResultController extends Controller
         $patients = [];
         $doctors = [];
 
-        if ($isDoctor) {
-            $patients = User::all()->pluck('email')->all();
-        } else {
-            $doctors = $user->labResults->all()->pluck('email')->all();
+        try {
+            if ($isDoctor) {
+
+                $patients = Collect(User::all())->pluck('email')->all();
+            } else {
+
+                $doctors = Collect($user->labResults->all())->pluck('email')->all();
+            }
+        } catch (Exception $e) {;
         }
 
         session()->flashInput($request->input());
