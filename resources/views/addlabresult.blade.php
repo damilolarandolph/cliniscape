@@ -1,4 +1,8 @@
 @extends('master')
+@section('routename')
+Add Medical Record
+@endsection
+
 @section('css')
 <link href="{{asset('css/spreadsheet.css')}}" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">

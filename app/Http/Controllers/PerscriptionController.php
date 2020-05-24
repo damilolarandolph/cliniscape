@@ -58,14 +58,15 @@ class PerscriptionController extends Controller
     {
         $appointment = Appointment::find($request->input('appointment'));
 
-        $prescriptions = $appointment->prescriptions->where('collected', false)->get();
+        $prescriptions = $appointment->prescriptions->where('collected', false);
+
 
         foreach ($prescriptions as $prescription) {
             $shouldDispense = $request->filled("dispense{$prescription->id}");
 
             if ($shouldDispense) {
                 $medicine = Medicine::where('name', $prescription->medicine_name)
-                    ->where('dosage', $prescription->dosage);
+                    ->where('dosage', $prescription->dosage)->first();
                 $appointment->invoiceItems()->create(
                     [
                         'description' => "{$prescription->medicine_name} {$prescription->dosage}",
@@ -77,6 +78,8 @@ class PerscriptionController extends Controller
 
                 );
 
+                $prescription->collected = true;
+                $prescription->save();
                 $medicine->quantity = $medicine->quantity - $prescription->quantity;
                 $medicine->save();
             }

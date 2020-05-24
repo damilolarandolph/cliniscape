@@ -1,5 +1,9 @@
 @extends('master')
 
+@section('routename')
+Manage Prescriptions
+@endsection
+
 @section('main-content')
 
 <div class="container-fluid">

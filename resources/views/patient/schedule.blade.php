@@ -1,5 +1,9 @@
 @extends('master')
 
+@section('routename')
+Appointment Schedule
+@endsection
+
 @section('title')
 Appointment Schedule
 @endsection

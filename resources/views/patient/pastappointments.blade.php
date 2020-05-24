@@ -1,9 +1,12 @@
 @extends('master')
 
+@section('routename')
+Manage Appointments
+@endsection
+
 @section('css')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link href='https://clinicaltables.nlm.nih.gov/autocomplete-lhc-versions/17.0.2/autocomplete-lhc.min.css'
-    rel="stylesheet">
+<link rel="stylesheet" href="{{asset('css/flatpickr.min.css')}}">
+<link href="{{asset('css/autocomplete-lhc.min.css')}}" rel="stylesheet">
 <style>
     .sug-item:hover {
         cursor: pointer;
@@ -73,27 +76,36 @@
                             <a class="list-group-item list-group-item-action active " id="list-home-list"
                                 data-toggle="list" href="#list-home{{$loop->iteration}}" role="tab"
                                 aria-controls="home">{{$isDoctor ? 'Patient Info' : 'Doctor Info'}}</a>
+                            @if($appointment->status != 2)
                             <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
                                 href="#list-profile{{$loop->iteration}}" role="tab" aria-controls="profile">Services
                                 Rendered</a>
+
                             <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
                                 href="#list-messages{{$loop->iteration}}" role="tab" aria-controls="messages">Time</a>
                             <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
                                 href="#list-setting{{$loop->iteration}}" role="tab" aria-controls="settings">Notes</a>
+                            @endif
+                            @if($isDoctor)
                             <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
                                 href="#schedule{{$loop->iteration}}" role="tab" aria-controls="settings">Schedule
                                 Appointment</a>
+                            @endif
+                            @if ($appointment->status != 2)
                             <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
                                 href="#prescriptions{{$loop->iteration}}" role="tab"
                                 aria-controls="settings">Prescriptions</a>
-
+                            @if($isDoctor )
                             <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
                                 href="#supplies{{$loop->iteration}}" role="tab" aria-controls="settings">Add Used
                                 Medical Supplies</a>
-
-
+                            @endif
+                            @if (($appointment->status == 3) && $isDoctor)
                             <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
                                 href="#finish{{$loop->iteration}}" role="tab" aria-controls="settings">Finish</a>
+                            @endif
+
+                            @endif
 
                         </div>
                     </div>
@@ -135,7 +147,7 @@
                                         @endisset
                                     </div>
                                 </div>
-
+                                @if(($appointment->status != 1) && $isDoctor)
                                 <div class="card mt-2">
                                     <div class="card-header">
                                         Add Rendered Services
@@ -160,6 +172,7 @@
                                         </form>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="list-messages{{$loop->iteration}}" role="tabpanel"
                                 aria-labelledby="list-messages-list">
@@ -191,7 +204,7 @@
                                         @endif
                                     </div>
                                 </div>
-
+                                @if(($appointment->status != 1) && $isDoctor)
                                 <div class="card ">
                                     <div class="card-body">
                                         <h5 class="card-title">Add a note</h5>
@@ -207,6 +220,7 @@
                                         </form>
                                     </div>
                                 </div>
+                                @endif
                             </div>
 
                             <div class="tab-pane fade" id="schedule{{$loop->iteration}}" role="tabpanel"
@@ -277,7 +291,7 @@
                             </div>
                             <div class="tab-pane fade" id="prescriptions{{$loop->iteration}}" role="tabpanel"
                                 aria-labelledby="list-settings-list">
-                                <div class="card">
+                                <div clasgs="card">
                                     <div class="card-header">
                                         Prescribed Drugs (for full details please visit prescriptions tab)
                                     </div>
@@ -302,6 +316,7 @@
                                     </div>
 
                                 </div>
+                                @if(($appointment->status != 1) && $isDoctor)
                                 <div class="card mt-3 mb-3">
                                     <div class="card-body">
 
@@ -346,9 +361,11 @@
                                         </form>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                             <div class="tab-pane fade" id="supplies{{$loop->iteration}}" role="tabpanel"
                                 aria-labelledby="list-settings-list">
+
                                 <div class="card mb-3">
                                     <div class="card-body">
                                         <h5 class="card-title">Add Used Medical Supplies</h5>
@@ -405,10 +422,9 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-<script src='https://clinicaltables.nlm.nih.gov/autocomplete-lhc-versions/17.0.2/autocomplete-lhc.min.js'>
-</script>
+<script src="{{asset('js/flatpickr.js')}}"></script>
+<script src="{{asset('js/jquery.min.js')}}"></script>
+<script src="{{asset('js/autocomplete-lhc.min.js')}}"></script>
 <script>
     // Example POST method implementation:
 async function getData(url = '', data = {}) {

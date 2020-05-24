@@ -1,5 +1,9 @@
 @extends("master")
 
+@section('routename')
+Schedule an Appointment
+@endsection
+
 @section("main-content")
 
 <div class="col-md-9">
