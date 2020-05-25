@@ -114,4 +114,6 @@ Route::middleware([AddUserInfo::class])->group(function () {
 
     Route::post('/editsupply', "InventoryController@editSupply");
     Route::post('/editmedicine', "InventoryController@editMedicine");
+
+    Route::get('/manageinvoices', "InvoiceController@show");
 });

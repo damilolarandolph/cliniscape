@@ -20,3 +20,8 @@
     transition: all 0.5s;
     background-color: rgb(61, 105, 228);
 }
+
+@font-face {
+    font-family: "Hammersmith";
+    src: url("/fonts/hammersmith.ttf") format("truetype");
+}

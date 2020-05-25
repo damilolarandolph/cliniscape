@@ -18,7 +18,7 @@
             </div>
             <div class="col">
                 @include('partials.titlebar')
-                <div class="row justify-content-center p-4" style="max-height: 100%">
+                <div class="row justify-content-center p-4 h-100">
                     @yield('main-content')
                 </div>
             </div>

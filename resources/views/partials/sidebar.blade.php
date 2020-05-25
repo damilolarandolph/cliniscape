@@ -1,5 +1,6 @@
 <div class="row p-2 bg-primary" style="height: 5rem;">
-    <div class="row align-content-center">
+    <a class="row align-content-center" href="/">
+
         <div class="col">
             <img class="img-fluid" style="max-width: 70%" src="{{asset('images/logo.svg')}}">
         </div>
@@ -7,8 +8,45 @@
             <span style="font-size: 1.5rem;"
                 class="text-capitalize font-weight-bold text-white align-middle">CliniScape</span>
         </div>
+
+    </a>
+</div>
+
+<div class="row bg-primary" style="min-height: 4rem;">
+    <div style="font-family: 'Hammersmith';" class="col align-self-center text-center text-white">
+        <h4>
+            @if($isDoctor)
+            Doctor Portal
+            @elseif($isPatient)
+            Patient Portal
+            @elseif($isPharma)
+            Pharamacist Portal
+            @endif
+        </h4>
     </div>
 </div>
+
+@if(!$isAdmin)
+<div class="row lead" style="min-height: 3rem;font-family: 'Hammersmith';background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), 
+    @if($isDoctor)
+    url({{asset('/images/smiling_doctor.jpg')}})
+    @elseif($isPatient)
+    url({{asset('/images/smiling_patient.jpg')}})
+    @else
+    url({{asset('/images/smiling_pharma.jpg')}})
+    @endif
+    ; background-size: cover;">
+    <div class="col text-center p-3 text-white">
+        <h4>
+            {{$user->fullName()}}
+        </h4>
+        <hr class="text-white" />
+        <h6 class="">
+            {{$user->email}}
+        </h6>
+    </div>
+</div>
+@endif
 
 @if(!$isDoctor && !$isPharma)
 <div class="row sidebar-link {{Request::path() == 'makeappointment' ? 'bg-primary text-light' : ''}}">
@@ -72,3 +110,9 @@
     </a>
 </div>
 @endif
+
+<div class="row sidebar-link {{Request::path() == 'manageinvoices' ? 'bg-primary text-light' : ''}}">
+    <a class="{{Request::path() == 'manageinvoices' ? 'text-light' : ''}}" href="/manageinvoices">
+        Manage Invoices
+    </a>
+</div>

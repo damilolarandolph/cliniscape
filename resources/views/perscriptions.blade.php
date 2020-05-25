@@ -15,6 +15,7 @@ Manage Prescriptions
                 </div>
 
                 @foreach ($appointments as $appointment)
+                @if(count($appointment->prescriptions) != 0)
                 <div class="card-body">
                     <div class="accordion" id="accordionExample">
 
@@ -114,17 +115,22 @@ Manage Prescriptions
                                             </li>
                                             @endforeach
                                         </ul>
-                                        <div class="align-middle p-1 mb-3">
-                                            <button class="btn btn-primary w-75" type="submit">
-                                                Dispense Selected
-                                            </button>
+                                        @if($isPharma)
+                                        <div class="row align-middle p-1 mb-3 mx-auto">
+                                            <div class="col mx-auto">
+                                                <button class="btn btn-primary w-75" type="submit">
+                                                    Dispense Selected
+                                                </button>
+                                            </div>
                                         </div>
+                                        @endif
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endif
                 @endforeach
             </div>
         </div>

@@ -23,7 +23,7 @@ class AddUserInfo
         $isPatient = $request->session()->get('role') == 3;
         $user = null;
 
-        if ($isDoctor) {
+        if ($isDoctor || $isAdmin) {
             $user = Doctor::where('email', $request->session()->get('email'))
                 ->first();
         } else {

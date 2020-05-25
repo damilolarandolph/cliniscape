@@ -141,7 +141,7 @@ class AppointmentController extends Controller
         if (isset($appointment->appointment_details['services'])) {
             foreach ($appointment->appointment_details['services'] as $service) {
                 $serviceItem = $appointment
-                    ->doctord
+                    ->doctor
                     ->typeMap
                     ->type
                     ->services_rendered[(int) $service];
