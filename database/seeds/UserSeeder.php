@@ -22,5 +22,13 @@ class UserSeeder extends Seeder
         $user->__constructWithItems('dami', 'damilolarandolph@gmail.com', 'test123', 1,);
 
         $user->save();
+
+        $userDetails = [
+            'basic_details' => [
+                'avatar' => 'avatar/default.jpg',
+            ]
+        ];
+
+        $user->userDetails()->create($userDetails);
     }
 }
