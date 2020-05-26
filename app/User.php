@@ -19,6 +19,7 @@ class User extends Model
         $this->email = $email;
         $this->password = Hash::make($password);
         $this->account_type = $accountType;
+        $this->userDetails->basic_details['avatar'] = '/avatar/default.jpg';
     }
 
     protected static function booted()

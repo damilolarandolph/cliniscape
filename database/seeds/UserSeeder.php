@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $user = new App\User();
-        $user->__constructWithItems('dami', 'damilolarandolph@gmail.com', 'test123', 1);
+        $user->__constructWithItems('dami', 'damilolarandolph@gmail.com', 'test123', 1,);
 
         $user->save();
     }
