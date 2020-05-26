@@ -15,12 +15,14 @@
 <div class="row bg-primary" style="min-height: 4rem;">
     <div style="font-family: 'Hammersmith';" class="col align-self-center text-center text-white">
         <h4>
-            @if($isDoctor)
+            @if($isDoctor && !$isFinance && !$isPharma)
             Doctor Portal
             @elseif($isPatient)
             Patient Portal
             @elseif($isPharma)
             Pharamacist Portal
+            @elseif($isFinance)
+            Finance Portal
             @endif
         </h4>
     </div>

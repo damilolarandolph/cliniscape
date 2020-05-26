@@ -19,7 +19,7 @@ class DoctorTypesSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $doctorType = App\DoctorType::create(
+        DoctorType::create(
             [
                 'title' => 'Primary Care Doctor',
                 'description' => '',
@@ -99,6 +99,11 @@ class DoctorTypesSeeder extends Seeder
         DoctorType::create([
             'description' => '',
             'title' => 'Pharmacist',
+            'services_rendered' => []
+        ]);
+        DoctorType::create([
+            'description' => '',
+            'title' => 'Finance',
             'services_rendered' => []
         ]);
     }

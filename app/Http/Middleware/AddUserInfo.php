@@ -20,6 +20,7 @@ class AddUserInfo
         $isDoctor = $request->session()->get('role') == 2;
         $isPharma  = false;
         $isAdmin = $request->session()->get('role') == 1;
+        $isFinance = false;
         $isPatient = $request->session()->get('role') == 3;
         $user = null;
 
@@ -33,12 +34,23 @@ class AddUserInfo
 
         if ($isDoctor) {
             $isPharma = $user->typeMap->type->id == 5;
+            $isFinance = $user->typeMap->type->id == 6;
         }
         view()->share([
             'isPharma' => $isPharma,
             'isDoctor' => $isDoctor,
             'isAdmin' => $isAdmin,
             'isPatient' => $isPatient,
+            'isFinance' => $isFinance,
+            'user' => $user
+        ]);
+
+        $request->attributes->set('userInfo', [
+            'isPharma' => $isPharma,
+            'isDoctor' => $isDoctor,
+            'isAdmin' => $isAdmin,
+            'isPatient' => $isPatient,
+            'isFinance' => $isFinance,
             'user' => $user
         ]);
         return $next($request);

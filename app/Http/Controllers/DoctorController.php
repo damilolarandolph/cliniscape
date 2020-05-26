@@ -69,6 +69,7 @@ class DoctorController extends Controller
 
         ];
 
+
         $userDetails = [
             'basic_details' => [
                 'avatar' => 'avatar/default.jpg',
@@ -76,6 +77,7 @@ class DoctorController extends Controller
                 'lastname' => $request->input('lastname'),
                 'dob' => $request->input('dob'),
                 'gender' => $request->input('gender'),
+                'phonenumber' => $request->input('phonenumber'),
                 'title' => 'Dr'
             ]
         ];

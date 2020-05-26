@@ -75,9 +75,15 @@ class RegisterationController extends Controller
 
         ];
 
+        $avatar = 'images/default.jpg';
+
+        if ($request->hasFile('avatar')) {
+            $avatar =  $request->file('avatar')->store('avatars');
+        }
+
         $userDetails = [
             'basic_details' => [
-                'avatar' => 'images/default.jpg',
+                'avatar' =>  $avatar,
                 'firstname' => $request->input('firstname'),
                 'lastname' => $request->input('lastname'),
                 'dob' => $request->input('dob'),

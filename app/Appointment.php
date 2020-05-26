@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 class Appointment extends Model
 {
     protected $table = "appointments";
-
+    private $details = null;
     protected $fillable = [
         'doctor_email',
         'patient_email',
@@ -44,5 +44,32 @@ class Appointment extends Model
     public function invoiceSheetId()
     {
         return Hash::make("{$this->id}{$this->created_at}");
+    }
+
+    public function getInvoiceDetails()
+    {
+        if (isset($this->details)) {
+            return $this->details;
+        }
+        $details = [
+            'owing' => 0,
+            'paid' => 0,
+            'total' => 0
+        ];
+
+        foreach ($this->invoiceItems as $invoiceItem) {
+
+            if ($invoiceItem->paid) {
+                $details['paid'] += $invoiceItem->total_price;
+            } else {
+                $details['owing'] += $invoiceItem->total_price;
+            }
+
+            $details['total'] += $invoiceItem->total_price;
+        }
+
+        $this->details = $details;
+
+        return $details;
     }
 }
