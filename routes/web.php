@@ -3,6 +3,7 @@
 use App\Appointment;
 use App\Doctor;
 use App\Http\Middleware\AddUserInfo;
+use App\Http\Middleware\Authenticate;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,14 +34,22 @@ Route::get('/register', 'RegisterationController@register');
 
 Route::post('/register', 'RegisterationController@store');
 
-Route::middleware([AddUserInfo::class])->group(function () {
+Route::middleware([AddUserInfo::class,  Authenticate::class])->group(function () {
     Route::get('/', function () {
+
         return view('welcome');
     })->middleware('auth');
 
     Route::get('/managedoctors', function () {
         $doctorTypes = App\DoctorType::all();
         return view('admin.managedoctors', ['doctorTypes' => $doctorTypes]);
+    });
+
+    Route::get('/logout', function (Request $request) {
+        $request->session()->remove('email');
+        $request->session()->remove('role');
+
+        return redirect('/login');
     });
 
     Route::post('/managedoctors', 'DoctorController@store');
@@ -117,4 +126,6 @@ Route::middleware([AddUserInfo::class])->group(function () {
 
     Route::get('/manageinvoices', "InvoiceController@show");
     Route::post('/payinvoices', "InvoiceController@payInvoices");
+
+    Route::get('/manageprofile', "UserController@show");
 });

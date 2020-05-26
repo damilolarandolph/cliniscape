@@ -104,6 +104,11 @@
                             </div>
                         </form>
                     </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <a href="/login">Have An Account ? Login Here</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col ">

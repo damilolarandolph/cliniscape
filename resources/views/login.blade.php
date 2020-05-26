@@ -10,8 +10,13 @@
 </head>
 
 <body>
-    <div class="container-fluid vh-100"
-        style="background-image: url({{asset('/images/login_bg2.jpg')}}); background-repeat: no-repeat; background-size: cover;">
+    <div class="container-fluid vh-100" style="background-image: 
+         @if(Request::path() != 'doctorlogin')
+        url({{asset('/images/login_bg2.jpg')}});
+        @else
+        url({{asset('/images/smiling_doctor.jpg')}});
+        @endif
+         background-repeat: no-repeat; background-size: cover;">
         <div class="row h-100 align-items-center">
             <div class="col-3 h-75">
                 <div class="card h-100 p-5 d-flex flex-column">
@@ -41,6 +46,23 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
+
+                        @if(Request::path() != 'doctorlogin')
+                        <div class="row">
+                            <div class="col text-center">
+                                <a href="/register">Don't Have An Account ? Register Here</a>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col text-center">
+                                <a href="/doctorlogin">Have A Doctor Account ? Login Here</a>
+                            </div>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -58,9 +80,15 @@
                     </div>
                     <div class="d-flex flex-column">
                         <div class="ml-auto mr-auto">
+                            @if(Request::path() != 'doctorlogin')
                             <h1 class="display-2 text-white">
                                 Patient Login
                             </h1>
+                            @else
+                            <h1 class="display-2 text-white">
+                                Doctor Login
+                            </h1>
+                            @endif
                         </div>
                     </div>
 

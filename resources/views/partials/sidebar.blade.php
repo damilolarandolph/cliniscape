@@ -30,7 +30,7 @@
 
 @if(!$isAdmin)
 <div class="row lead" style="min-height: 3rem;font-family: 'Hammersmith';background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), 
-    @if($isDoctor)
+    @if($isDoctor && !$isPharma && !$isFinance)
     url({{asset('/images/smiling_doctor.jpg')}})
     @elseif($isPatient)
     url({{asset('/images/smiling_patient.jpg')}})
@@ -52,7 +52,8 @@
 
 @if(!$isDoctor && !$isPharma)
 <div class="row sidebar-link {{Request::path() == 'makeappointment' ? 'bg-primary text-light' : ''}}">
-    <a class="{{Request::path() == 'makeappointment' ? 'text-light' : ''}}" href="/makeappointment">Schedule
+    <a class="{{Request::path() == 'makeappointment' ? 'text-light' : ''}}" href="/makeappointment">
+        <i class="fas fa-calendar-plus p-2"></i>Schedule
         Appointment
     </a>
 </div>
@@ -60,14 +61,16 @@
 
 @if(!$isPharma && !$isAdmin)
 <div class="row sidebar-link {{Request::path() == 'patientschedule' ? 'bg-primary text-light' : ''}}">
-    <a class="{{Request::path() == 'patientschedule' ? 'text-light' : ''}}" href="/patientschedule">View Calendar</a>
+    <a class="{{Request::path() == 'patientschedule' ? 'text-light' : ''}}" href="/patientschedule">
+        <i class="fas fa-calendar-alt p-2"></i>View Calendar</a>
 </div>
 
 
 
 <div class="row sidebar-link {{Request::path() == 'pastappointments' ? 'bg-primary text-light' : ''}}">
-    <a class="{{Request::path() == 'pastappointments' ? 'text-light' : ''}}" href="/pastappointments">Appointment
-        History
+    <a class="{{Request::path() == 'pastappointments' ? 'text-light' : ''}}" href="/pastappointments">
+        <i class="fas fa-calendar-check p-2"></i>Manage
+        Appointments
     </a>
 </div>
 @endif
@@ -75,14 +78,15 @@
 
 @if($isAdmin)
 <div class="row sidebar-link {{Request::path() == 'managedoctors' ? 'bg-primary text-light' : ''}}">
-    <a class="{{Request::path() == 'managedoctors' ? 'text-light' : ''}}" href="/managedoctors">Manage Doctors</a>
+    <a class="{{Request::path() == 'managedoctors' ? 'text-light' : ''}}" href="/managedoctors">
+        <i class="fas fa-user-md p-2"></i>Manage Doctors</a>
 </div>
 @endif
 
 @if(($isDoctor && !$isAdmin) && !$isPharma)
 <div class="row sidebar-link {{Request::path() == 'addlabresult' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'addlabresult' ? 'text-light' : ''}}" href="/addlabresult">
-        Add Lab Result
+        <i class="fas fa-plus p-2"></i> Add Lab Result
     </a>
 </div>
 
@@ -91,7 +95,7 @@
 @if(($isDoctor || $isPatient) && !$isPharma)
 <div class="row sidebar-link {{Request::path() == 'viewresults' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'viewresults' ? 'text-light' : ''}}" href="/viewresults">
-        View Results
+        <i class="fas fa-vials p-2"></i> View Results
     </a>
 </div>
 @endif
@@ -100,7 +104,7 @@
 
 <div class="row sidebar-link {{Request::path() == 'perscriptions' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'viewresults' ? 'perscriptions' : ''}}" href="/perscriptions">
-        View Perscriptions
+        <i class="fas fa-file-medical p-2"></i> View Perscriptions
     </a>
 </div>
 @endif
@@ -108,13 +112,23 @@
 @if($isPharma)
 <div class="row sidebar-link {{Request::path() == 'manageinventory' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'manageinventory' ? 'text-light' : ''}}" href="/manageinventory">
-        Manage Inventory
+        <i class="fas fa-prescription-bottle-alt p-2"></i> Manage Inventory
     </a>
 </div>
 @endif
 
+@if(!$isPharma && !$isAdmin)
 <div class="row sidebar-link {{Request::path() == 'manageinvoices' ? 'bg-primary text-light' : ''}}">
     <a class="{{Request::path() == 'manageinvoices' ? 'text-light' : ''}}" href="/manageinvoices">
-        Manage Invoices
+        <i class="fas fa-file-invoice p-2"></i> Manage Invoices
     </a>
 </div>
+@endif
+
+@if(!$isDoctor)
+<div class="row sidebar-link {{Request::path() == 'manageprofile' ? 'bg-primary text-light' : ''}}">
+    <a class="{{Request::path() == 'manageprofile' ? 'text-light' : ''}}" href="/manageprofile">
+        <i class="fas fa-user p-2"></i> Manage Profile
+    </a>
+</div>
+@endif

@@ -5,4 +5,19 @@
                         @yield('routename', 'dummy route')
                 </span>
         </div>
+
+        <div class="col-2 d-flex flex-row">
+
+                <div>
+                        <img src="{{asset($user->userDetails->basic_details['avatar'])}}"
+                                class="img-fluid w-50 circle rounded" alt="...">
+                </div>
+                <div>
+                        <a href="/logout">
+                                <button class="btn btn-primary">
+                                        Logout
+                                </button>
+                        </a>
+                </div>
+        </div>
 </div>
