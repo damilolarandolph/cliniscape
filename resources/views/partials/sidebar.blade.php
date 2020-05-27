@@ -132,3 +132,11 @@
     </a>
 </div>
 @endif
+
+@if(!$isAdmin)
+<div class="row sidebar-link {{Request::path() == 'chat' ? 'bg-primary text-light' : ''}}">
+    <a class="{{Request::path() == 'chat' ? 'text-light' : ''}}" href="/chat">
+        <i class="fas fa-comments p-2"></i> Chat
+    </a>
+</div>
+@endif

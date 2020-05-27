@@ -128,4 +128,8 @@ Route::middleware([AddUserInfo::class,  Authenticate::class])->group(function ()
     Route::post('/payinvoices', "InvoiceController@payInvoices");
 
     Route::get('/manageprofile', "UserController@show");
+
+    Route::get('/chat', function () {
+        return view('chat');
+    });
 });

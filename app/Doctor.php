@@ -66,6 +66,23 @@ class Doctor extends User
         return $count;
     }
 
+    static function getOnlyDoctors()
+    {
+        $items = Doctor::all()->filter(function ($user) {
+            if ($user->account_type != 1) {
+                $typeId = $user->typeMap->type->id;
+
+                return $typeId < 5;
+            } else {
+                return false;
+            }
+        });
+
+
+
+        return $items;
+    }
+
 
     function appointments()
     {
