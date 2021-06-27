@@ -1,0 +1,5 @@
+#cloudbuild.yaml
+steps:
+  - name: ‘docker/compose:1.29.2’
+    args: [‘up’, ‘-d’]
+  images: ['gcr.io/$PROJECT_ID/cliniscape']
