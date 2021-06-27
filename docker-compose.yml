@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  db:
+    image: mysql:8.0
+    command: "--default-authentication-plugin=mysql_native_password"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=webdeploy
+      - MYSQL_DATABASE=laravel
+    networks:
+      - laravelapp
+  application:
+    build:
+      context: .
+    ports:
+      - 4000:80
+    networks:
+      - laravelapp
+    depends_on:
+      - db
+    command: sh -c "dockerize -wait tcp://db:3306 -timeout 40s -wait-retry-interval 30s /var/www/run.sh"
+
+networks:
+  laravelapp:
+    driver: bridge
